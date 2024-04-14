@@ -1,0 +1,29 @@
+<ion-content>
+  <ion-header>
+    
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        
+        <ion-icon color="primary" name="chevron-back"></ion-icon>
+        <ion-button [strong]="true" (click)="fechar()">Voltar</ion-button>
+      </ion-buttons>
+      <ion-title>Informações da tarefa</ion-title>
+    </ion-toolbar>
+    
+  </ion-header>
+  
+  <ion-item>
+    <ion-input labelPlacement="stacked" readonly label="Tarefa" value="{{tarefaInfo.descricao}}"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input labelPlacement="stacked" readonly label="Criada em"  value="{{tarefaInfo.criadaEm |date:'dd/MM/yyyy'}}"></ion-input>
+    <ion-input labelPlacement="stacked" readonly label="Data da tarefa" value="{{tarefaInfo.data|date:'dd/MM/yyyy'}}"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox checked="{{tarefaInfo.favorita}}" >Favorita</ion-checkbox>
+    <ion-checkbox checked="{{tarefaInfo.concluida}}" >Concluída</ion-checkbox>
+  </ion-item>
+</ion-content>
+
+
+

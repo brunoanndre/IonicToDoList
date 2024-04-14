@@ -1,20 +1,101 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+<ion-menu contentId="mainContent">
+  <ion-header>
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title>Lista de Tarefas</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-content>
+    <ion-item>
+      <ion-avatar>
+        <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+      </ion-avatar>
+      <ion-label>Bruno André</ion-label>
+    </ion-item>  
+    <ion-item routerLink="/sobre">
+      Sobre
+    </ion-item>
+  </ion-content>
+  
+</ion-menu> 
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+<ion-header >
+  <ion-toolbar>
+    <ion-title>
+      Lista de Tarefas
+    </ion-title>
+ <div class="ion-page" id = "mainContent" main>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>        
+  </div>  
+  </ion-toolbar>
+</ion-header>
+<!--CONTENT-->
+<ion-content [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar>
+      <ion-searchbar (ionInput)="buscarTarefas($event)" [debounce]="400" placeholder="Buscar tarefa"></ion-searchbar>
+    </ion-toolbar>
+  </ion-header>
+<!--FILTRAR TAREFAS-->
+  <ion-segment value="descricao" (ionChange)="filtrarTarefas($event)" >
+    <ion-segment-button value="todas">
+      <ion-label>Todas</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="concluidas">
+      <ion-label>Concluídas</ion-label>
+      <ion-icon color="success" name="checkmark-circle"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="favoritas">
+      <ion-label>Favoritas</ion-label>
+      <ion-icon color="warning" name="star"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+  <!--ORDENAÇÃO DA LISTA DE TAREFAS-->
+  <ion-list>
+    <ion-item>
+      <ion-select aria-label="Fruit" interface="popover" placeholder="Ordenar por:" (ionChange)="ordenarTarefas($event)">
+        <ion-select-option value="Descrição">Descrição</ion-select-option>
+        <ion-select-option value="Data">Data</ion-select-option>
+        <ion-select-option value="Prioridade">Prioridade</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <!--LISTA DE TAREFAS-->
+  <ion-list>
+    <ion-item-sliding *ngFor="let tarefa of tarefasFiltradas; let indice = index" #sliding>
+      <ion-item-options (ionSwipe)="concluirTarefa(indice)" side="start">
+        <ion-item-option color="success" expandable (click)="concluirTarefa(indice);">
+          <ion-icon slot="top"  name="checkmark-circle"></ion-icon>
+          Concluir
+        </ion-item-option>
+      </ion-item-options>
+    <ion-item [button]="true" (click)="visualizarTarefa(tarefa)">
+      <ion-label><h2>{{tarefa.descricao}} <ion-icon name="flag"></ion-icon></h2>
+      <p>{{tarefa.data|date:'dd/MM/yyyy'}}</p>
+    <p>Prioridade: {{tarefa.prioridade == 1 ? "Baixa": tarefa.prioridade == 2 ? "Média": "Alta"}}</p></ion-label>
+      <ion-icon *ngIf="tarefa.favorita" color="warning" name="star"></ion-icon>
+      <ion-icon *ngIf="tarefa.concluida" color="success" name="checkmark-circle"></ion-icon>
+    </ion-item>
+    <ion-item-options (ionSwipe)="removerTarefa(indice);">
+      <ion-item-option (click)="favoritar(indice)">
+        <ion-icon slot="top" color="warning" name="star"></ion-icon>
+        Favoritar
+      </ion-item-option>
+      <ion-item-option color="danger" expandable (click)="removerTarefa(indice);">
+        <ion-icon slot="top" name="trash"></ion-icon>
+        Deletar
+      </ion-item-option>
+    </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="adicionarTarefa()">
+      <ion-icon  expand="block" name="add-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  
+
 </ion-content>

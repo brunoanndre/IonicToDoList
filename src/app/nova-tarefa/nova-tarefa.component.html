@@ -1,0 +1,28 @@
+<ion-content>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button color="medium" (click)="cancelar()">Cancelar</ion-button>
+      </ion-buttons>
+      <ion-title>Adicionar</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="confirmar()" [strong]="true">Confirmar</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-item>
+      <ion-input labelPlacement="stacked"  label="Digite a tarefa" [(ngModel)]="descricao"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="date" labelPlacement="stacked" label="Quando a tarefa será realizada?" [(ngModel)]="dataTarefa"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-select label="Prioridade da tarefa" label-placement="stacked" [(ngModel)]="prioridade">
+        <ion-select-option value="1">Baixa</ion-select-option>
+        <ion-select-option value="2">Média</ion-select-option>
+        <ion-select-option value="3">Alta</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-content>
+</ion-content>
